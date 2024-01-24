@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Data.Abstract;
+using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers;/*namespace nin yeni gelen özelliği sayesinde
 parantez yerine ; kullanabiliyoruz*/
@@ -13,5 +14,20 @@ public class HomeController : Controller
     {
         _storeRepository = storeRepository;
     }
-    public IActionResult Index() => View(); //farklı gösterim tekniği (ArrowFunction)
+
+    /*Sayfaya verileri dönüştürerek gönderelim*/
+    public IActionResult Index()
+    {
+        var products = _storeRepository.Products.Select(p => new ProductViewModel
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price
+        }).ToList();
+
+        return View(new ProductListViewModel{
+            Products = products
+        });
+    } //Modeli dönüştürerek sayfa üzerine gönderelim
 }

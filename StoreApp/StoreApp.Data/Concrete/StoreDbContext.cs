@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 namespace StoreApp.Data.Concrete;
 
-public class StoreDbContext:DbContext
+public class StoreDbContext : DbContext
 {
-    public StoreDbContext(DbContextOptions<StoreDbContext> options): base(options)
+    public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
     {
-        
+
     }
 
     public DbSet<Product> Products => Set<Product>();
@@ -13,7 +13,7 @@ public class StoreDbContext:DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
+        /*Bu yeni çıkan bir yöntemdir ve .NET 8 ile birlikte gelmiştir.*/
         modelBuilder.Entity<Product>().HasData(
             new List<Product>(){
                 new(){Id=1,Name="Nokia 3200", Price=350, Description="İlk Telefonum", Category="Telefon"},

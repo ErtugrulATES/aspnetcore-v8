@@ -1,1 +1,13 @@
-<h5>İndeks Sayfası</h5>
+<!-- IEnumerable nesnesini List nesnesinden daha 
+hafif olduğu için kullandık -->
+@model ProductListViewModel
+
+@foreach (var p in Model.Products)
+{
+    <div>
+        <h4>@p.Name</h4>
+        <p>@p.Description</p>
+        <p>@p.Price</p>
+    </div>
+}
+<h5>İçerik Sayfası</h5>

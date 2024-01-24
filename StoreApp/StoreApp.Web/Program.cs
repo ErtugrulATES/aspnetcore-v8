@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();/*MVC yapısını projeye tanıtır*/
 builder.Services.AddDbContext<StoreDbContext>(options =>
 {
    options.UseSqlite(builder.Configuration["ConnectionStrings:StoreDbConnection"], b => b.MigrationsAssembly("StoreApp.Web"));
-});
+}); /* "StoreApp.Web" klasörünü projeye tanıtalım*/
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();/* bu kod
 IStoreRepository bizden ne zaman çağırılırsa bize EFStoreRepository ögesini döndürür
