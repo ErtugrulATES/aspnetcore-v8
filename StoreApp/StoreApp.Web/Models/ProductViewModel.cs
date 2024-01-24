@@ -12,4 +12,14 @@ public class ProductViewModel
 public class ProductListViewModel
 {
     public IEnumerable<ProductViewModel> Products { get; set; } = Enumerable.Empty<ProductViewModel>();
+    public PageInfo PageInfo { get; set; } = new();/* oluşturduğumuz yeni sınıfı sayfaya gönderelim*/
+}
+
+/*bu sınıfları ayrı dosyalar içerisinde de tanımlayabilirdik*/
+/*buradaki amacımız veri sayısına göre sayfa sayısını ayarlamak ve boş sayfa oluşturulmasını önlemektir.*/
+public class PageInfo
+{
+    public int TotalItems { get; set; } /*Toplam veri sayısı*/
+    public int ItemsPerPage { get; set; } /*Sayfa başına veri sayısı*/
+    public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);/*Sayfa sayısı*/
 }
