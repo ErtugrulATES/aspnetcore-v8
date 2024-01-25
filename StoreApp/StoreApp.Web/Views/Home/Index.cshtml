@@ -4,7 +4,8 @@ hafif olduğu için kullandık -->
 
 <div class="row">
     <div class="col-md-3">
-        <vc:categories-list/>
+        <!-- Aşağıdaki TagHelper sayesinde kategori butonları hızlıca oluşturulur -->
+        <vc:categories-list />
     </div>
     <div class="col-md-9">
         @if (Model.Products.Count() == 0)
