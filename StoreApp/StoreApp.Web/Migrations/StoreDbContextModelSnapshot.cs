@@ -81,6 +81,46 @@ namespace StoreApp.Web.Migrations
                             Description = "İlk Tabletim",
                             Name = "Huawei MatPad 11.5 PaperMatte",
                             Price = 13099m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = "Aksesuar",
+                            Description = "İlk Kablosuz Kulaklığım",
+                            Name = "Huawei Free Buds 5 Se",
+                            Price = 1099m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = "Aksesuar",
+                            Description = "Mavi Renk",
+                            Name = "Sony Kablolu Kulaklık",
+                            Price = 160m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = "Aksesuar",
+                            Description = "Pembe Renk",
+                            Name = "Ttec Kulaklık",
+                            Price = 140m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = "Araba",
+                            Description = "2009 Model Panelvan",
+                            Name = "Renault Kangoo Multix",
+                            Price = 13099m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = "Aksesuar",
+                            Description = "Tableti taşımak için",
+                            Name = "Colin's Çanta",
+                            Price = 13099m
                         });
                 });
 #pragma warning restore 612, 618

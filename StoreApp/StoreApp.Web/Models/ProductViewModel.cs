@@ -20,6 +20,7 @@ public class ProductListViewModel
 public class PageInfo
 {
     public int TotalItems { get; set; } /*Toplam veri sayısı*/
-    public int ItemsPerPage { get; set; } /*Sayfa başına veri sayısı*/
+    public int ItemsPerPage { get; set; } /*Sayfa başına veri sayısı*/   
+    public int CurrentPage { get; set; } /*Şeçili olan sayfanın numarası*/
     public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);/*Sayfa sayısı*/
 }

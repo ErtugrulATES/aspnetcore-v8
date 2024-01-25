@@ -26,6 +26,11 @@ public class PageLinkTagHelper : TagHelper
 
     public string? PageAction { get; set; }/*sayfa adres bilgisini tutmak için kullanılır*/
 
+    /*BootStrap sınıf bilgilerini aşağıdaki değişkenler ile taşırız*/
+    public string PageClass { get; set; } = string.Empty;
+    public string PageClassLink { get; set; } = string.Empty;
+    public string PageClassActive { get; set; } = string.Empty;
+
     /* TagHelper'ı verilen bağlam ve çıktıyla eşzamanlı olarak çalıştırır. */
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -40,6 +45,12 @@ public class PageLinkTagHelper : TagHelper
                 TagBuilder link = new TagBuilder("a");/* a etiketi oluştur*/
                 /* a etiketinin bağlantı bilgilerini oluştur */
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { page = i });
+
+                /*BootStrap kütüphanelerini dinamik olarak ekleyelim*/
+                link.AddCssClass(PageClass); /* btn sınıfı tüm değişkenlere uygulanacak */
+                /*eğer sayfa seçili ise PageClassActive stilini, değilse PageClassLink stilini uygula*/
+                link.AddCssClass(i == PageModel.CurrentPage ? PageClassActive : PageClassLink);
+
                 link.InnerHtml.Append(i.ToString()); /* a etiketinin içine sayfa no yazdır */
                 div.InnerHtml.AppendHtml(link);/* div içerisine html formatında a nesnesini ekle */
             }

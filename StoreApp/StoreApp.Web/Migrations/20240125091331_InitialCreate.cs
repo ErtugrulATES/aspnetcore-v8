@@ -37,7 +37,12 @@ namespace StoreApp.Web.Migrations
                     { 2, "Telefon", "İkinci Telefonum", "Nokia 5800", 480m },
                     { 3, "Telefon", "İlk Akıllı Telefonum", "Nokia Lumia 735", 520m },
                     { 4, "Telefon", "İlk Android Telefonum", "Xiaomi Redmi Note 8 Pro", 2160m },
-                    { 5, "Tablet", "İlk Tabletim", "Huawei MatPad 11.5 PaperMatte", 13099m }
+                    { 5, "Tablet", "İlk Tabletim", "Huawei MatPad 11.5 PaperMatte", 13099m },
+                    { 6, "Aksesuar", "İlk Kablosuz Kulaklığım", "Huawei Free Buds 5 Se", 1099m },
+                    { 7, "Aksesuar", "Mavi Renk", "Sony Kablolu Kulaklık", 160m },
+                    { 8, "Aksesuar", "Pembe Renk", "Ttec Kulaklık", 140m },
+                    { 9, "Araba", "2009 Model Panelvan", "Renault Kangoo Multix", 13099m },
+                    { 10, "Aksesuar", "Tableti taşımak için", "Colin's Çanta", 13099m }
                 });
         }
 

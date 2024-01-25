@@ -36,6 +36,7 @@ public class HomeController : Controller
             Products = products, /*numarası belirtilen sayfada gösterilecek veriler*/
             PageInfo = new PageInfo{/*sayfa bilgisi verisi*/
                 ItemsPerPage = pageSize,/*sayfa başına gösterilecek veri sayısı*/
+                CurrentPage = page,/*seçili sayfanın sayfa numarası*/
                 TotalItems = _storeRepository.Products.Count() /*Toplam veri sayisi*/
             }
         });
