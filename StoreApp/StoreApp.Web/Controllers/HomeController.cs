@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
+using StoreApp.Data.Concrete;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers;/*namespace nin yeni gelen özelliği sayesinde
@@ -18,12 +20,20 @@ public class HomeController : Controller
 
     /*Sayfaya verileri dönüştürerek gönderelim*/
     /* localhost:XXXX/?page=2 QueryString yapısı için aşağıdaki fonksiyonu düzenleyelim*/
-    public IActionResult Index(int page = 1)
+    public IActionResult Index(string kategori, int page = 1)
     {
-        var products = _storeRepository
-        .Products
-        .Skip((page-1)*pageSize) /*veri tabanındaki ilk ((page-1)*pageSize) adet veriyi
-        atlar ve devamındaki verileri getirir. .*/
+        int veriSayisi = 0;
+
+        var sorgu = _storeRepository.Products;
+        if (!string.IsNullOrEmpty(kategori))
+        {
+            sorgu = sorgu.Include(p => p.Categories).Where(p => p.Categories.Any(a => a.Url == kategori));
+        }
+        veriSayisi = sorgu.Count();
+        /*veri tabanındaki ilk ((page-1)*pageSize) adet veriyi atlar ve devamındaki verileri getirir.*/
+        sorgu = sorgu.Skip((page - 1) * pageSize);
+
+        var products = sorgu
         .Select(p => new ProductViewModel
         {
             Id = p.Id,
@@ -32,12 +42,15 @@ public class HomeController : Controller
             Price = p.Price
         }).Take(pageSize);/* veri tabanından pageSize adedi kadar veriyi getirir*/
 
-        return View(new ProductListViewModel{
+        return View(new ProductListViewModel
+        {
             Products = products, /*numarası belirtilen sayfada gösterilecek veriler*/
-            PageInfo = new PageInfo{/*sayfa bilgisi verisi*/
+            PageInfo = new PageInfo
+            {/*sayfa bilgisi verisi*/
                 ItemsPerPage = pageSize,/*sayfa başına gösterilecek veri sayısı*/
                 CurrentPage = page,/*seçili sayfanın sayfa numarası*/
-                TotalItems = _storeRepository.Products.Count() /*Toplam veri sayisi*/
+                /*Toplam veya filtrelenmiş veri sayisi*/
+                TotalItems = veriSayisi
             }
         });
     } //Modeli dönüştürerek sayfa üzerine gönderelim
