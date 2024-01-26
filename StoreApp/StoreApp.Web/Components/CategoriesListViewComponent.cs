@@ -15,7 +15,6 @@ public class CategoriesListViewComponent : ViewComponent
     {
         return View(_storeRepository
         .Products
-        .Select(c => c.Category)/*kategoriye göre filtreler*/
         .Distinct()/*Terkarlayan içeriklerden sadece bir tanesini alır */
         .OrderBy(c => c));/*içeriğe göre sıralar*/
     }
