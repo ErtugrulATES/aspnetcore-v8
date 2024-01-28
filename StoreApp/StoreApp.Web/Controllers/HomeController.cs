@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
@@ -12,10 +13,13 @@ public class HomeController : Controller
     public int pageSize = 3; /*bir sayfada kaç adet ürünün gösterileceği bilgisi*/
     /*Burada interface ile çalıştığımız için tamamen bağımsız bir
     yapıda çalışmış oluyoruz [IStoreRepository => EFStoreRepository]*/
-    private IStoreRepository _storeRepository;
-    public HomeController(IStoreRepository storeRepository)
+    private readonly IStoreRepository _storeRepository;
+
+    private readonly IMapper _mapper; /*AutoMapper nesnesini inject edelim*/
+    public HomeController(IStoreRepository storeRepository, IMapper mapper)
     {
         _storeRepository = storeRepository;
+        _mapper = mapper;
     }
 
     /*Sayfaya verileri dönüştürerek gönderelim*/
@@ -25,13 +29,8 @@ public class HomeController : Controller
         return View(new ProductListViewModel
         {
             Products = _storeRepository.GetProductsByCategory(kategori, page, pageSize)
-            .Select(p => new ProductViewModel
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price
-            }),
+            /*AutoMapper ile kod yazımını kısalttık*/
+            .Select(product => _mapper.Map<ProductViewModel>(product)),
             PageInfo = new PageInfo
             {/*sayfa bilgisi verisi*/
                 ItemsPerPage = pageSize,/*sayfa başına gösterilecek veri sayısı*/

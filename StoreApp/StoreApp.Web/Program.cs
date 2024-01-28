@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
 using StoreApp.Data.Concrete;
+using StoreApp.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();/*MVC yapısını projeye tanıtır*/
+
+/*AutoMapper Araçlarını projeye tanıtalım*/
+builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 builder.Services.AddDbContext<StoreDbContext>(options =>
 {
