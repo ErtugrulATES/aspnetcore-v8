@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
 
 namespace StoreApp.Data.Concrete;
@@ -23,5 +24,23 @@ public class EFStoreRepository : IStoreRepository
     public void CreateProduct(Product entity)
     {
         throw new NotImplementedException();
+    }
+
+    public int GetProductCount(string category)
+    {
+        return category == null ? Products.Count() : Products.Include(p => p.Categories)
+        .Where(p => p.Categories.Any(a => a.Url == category)).Count();
+    }
+
+    public IEnumerable<Product> GetProductsByCategory(string kategori, int sayfa, int sayfaBoyutu)
+    {
+        var urunler = Products;
+        if (!string.IsNullOrEmpty(kategori))
+        {
+            urunler = urunler.Include(p => p.Categories).Where(p => p.Categories.Any(a => a.Url == kategori));
+        }
+
+        /*veri tabanındaki ilk ((page-1)*pageSize) adet veriyi atlar ve devamındaki verileri getirir.*/
+       return urunler.Skip((sayfa - 1) * sayfaBoyutu).Take(sayfaBoyutu);/* veri tabanından pageSize adedi kadar veriyi getirir*/;
     }
 }

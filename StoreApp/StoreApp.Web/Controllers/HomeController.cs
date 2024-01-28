@@ -22,35 +22,22 @@ public class HomeController : Controller
     /* localhost:XXXX/?page=2 QueryString yapısı için aşağıdaki fonksiyonu düzenleyelim*/
     public IActionResult Index(string kategori, int page = 1)
     {
-        int veriSayisi = 0;
-
-        var sorgu = _storeRepository.Products;
-        if (!string.IsNullOrEmpty(kategori))
-        {
-            sorgu = sorgu.Include(p => p.Categories).Where(p => p.Categories.Any(a => a.Url == kategori));
-        }
-        veriSayisi = sorgu.Count();
-        /*veri tabanındaki ilk ((page-1)*pageSize) adet veriyi atlar ve devamındaki verileri getirir.*/
-        sorgu = sorgu.Skip((page - 1) * pageSize);
-
-        var products = sorgu
-        .Select(p => new ProductViewModel
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Price = p.Price
-        }).Take(pageSize);/* veri tabanından pageSize adedi kadar veriyi getirir*/
-
         return View(new ProductListViewModel
         {
-            Products = products, /*numarası belirtilen sayfada gösterilecek veriler*/
+            Products = _storeRepository.GetProductsByCategory(kategori, page, pageSize)
+            .Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price
+            }),
             PageInfo = new PageInfo
             {/*sayfa bilgisi verisi*/
                 ItemsPerPage = pageSize,/*sayfa başına gösterilecek veri sayısı*/
                 CurrentPage = page,/*seçili sayfanın sayfa numarası*/
                 /*Toplam veya filtrelenmiş veri sayisi*/
-                TotalItems = veriSayisi
+                TotalItems = _storeRepository.GetProductCount(kategori)
             }
         });
     } //Modeli dönüştürerek sayfa üzerine gönderelim
